@@ -1,0 +1,32 @@
+.card {
+  border: 5px solid red;
+  border-radius: 5%;
+  width: 100%;
+  background-color: black;
+}
+
+.card-header {
+  width: 95%;
+  margin: auto;
+}
+
+.card-body { 
+  width: 95%;
+  margin: auto;
+}
+
+.card-footer {
+  width: 95%;
+  margin: auto;
+}
+
+.cancelbtn {
+  float: right;
+  margin-top: 5%;
+  background-color: #FF3131;
+}
+
+.commentbtn {
+  margin-top: 5%;
+  background-color: #39ff14;
+}

@@ -1,0 +1,51 @@
+<ng-container *ngIf="!displayPosts">
+    <div class="text-white card">
+        <div class="card-header">
+            <h1 class="card-title title">Post</h1>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="postForm" (submit)="submitPost();">
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <input class="form-control" id="author" type="text" formControlName="author">
+                </div>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input class="form-control" id="title" type="text" formControlName="title">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea class="form-control" id="message" rows="3" type="text"
+                        formControlName="content"></textarea>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-outline-dark uploadbtn fw-bold" type="file" id="uploadImage" 
+                        (change)="imageUpload($event);" accept="image/png, image/gif, image/jpeg"
+                        >
+                    <label for="uploadImage">&nbsp;&nbsp;Upload Image (Optional)</label>
+                </div>
+                <div class="form-group progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar"
+                        [style.width]="imageProgress+'%'" aria-valuemin="0" aria-valuemax="100"> 
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-outline-dark uploadbtn fw-bold" type="file" id="uploadVideo"
+                        (change)="videoUpload($event);" accept="video/mp4,video/x-m4v,video/*" >
+                    <label for="uploadVideo">&nbsp;&nbsp;Upload Video (Optional)</label> 
+                </div>
+                <div class="form-group progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar"
+                        [style.width]="videoProgress+'%'" aria-valuemin="0" aria-valuemax="100"> 
+                    </div>
+                </div>
+                <div id="footer">
+                    <button [disabled]="!this.postForm.valid" type="submit" id="postbtn"
+                        class="btn btn-outline-dark fw-bold">Post</button>
+                    <button (click)="displayPostsChange.emit(true)"
+                        class="btn btn-outline-dark delbtn fw-bold">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-container>

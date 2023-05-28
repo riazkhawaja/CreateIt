@@ -1,0 +1,48 @@
+<div class="container post">
+    <div class="row">
+        <div class="text-white bg-dark card w-100">
+            <div class="card-body">
+                <span class="top">
+                    <h1 class="card-title title">{{ post.title }}</h1>
+                    <p class="card-text date">{{ post.date | date:'yyyy/MM/dd h:mm:ss a' }}</p>
+                </span>
+                <h6 class="listing">By <i>{{ post.author }}</i></h6>
+                <p class="card-text">{{ post.content }}</p>
+                <p class="card-text">{{ post.upvotes - post.downvotes }}</p>
+                <div class="col-sm">
+                    <button (click)="upvotePost( post )"> <i class="arrow up upvote"></i> </button>
+                </div>
+                <div class="col-sm">
+                    <button (click)="downvotePost( post )"> <i class="arrow down downvote"></i> </button>
+                </div>
+                <ng-container>
+                    <app-add-comment [post]="post"></app-add-comment>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-container>
+    <div class="results bg-dark" *ngFor="let comment of commentList">
+        <div class="container" *ngIf="comment.post == post.id">
+            <div class="row">
+                <div class="text-white bg-dark card w-100">
+                    <div class="card-body">
+                        <span class="top">
+                            <p class="card-text date">{{ comment.date | date:'yyyy/MM/dd h:mm:ss a' }}</p>
+                        </span>
+                        <h6 class="listing">By <i>{{ comment.author }}</i></h6>
+                        <p class="card-text">{{ comment.content }}</p>
+                        <p class="card-text">{{ comment.upvotes - comment.downvotes }}</p>
+                        <div class="col-sm">
+                            <button (click)="upvoteComment( comment )"> <i class="arrow up upvote"></i> </button>
+                        </div>
+                        <div class="col-sm">
+                            <button (click)="downvoteComment( comment )"> <i class="arrow down downvote"></i> </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

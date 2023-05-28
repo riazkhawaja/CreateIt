@@ -1,0 +1,6 @@
+node_modules
+.angular
+.firebase
+dist
+public
+src/environments

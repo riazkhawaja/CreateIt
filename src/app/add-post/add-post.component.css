@@ -1,0 +1,48 @@
+.card {
+  border: 5px solid red;
+  margin-top: 1%;
+  border-radius: 5%;
+  background-color: black;
+}
+
+.card-header {
+  width: 95%;
+  margin: auto;
+}
+
+.card-body {
+  width: 95%;
+  margin: auto;
+}
+
+.card-footer {
+  width: 95%;
+  margin: auto;
+}
+
+#uploadImage {
+  margin: 3% 0%;
+  max-width: 100%;
+}
+
+#uploadVideo {
+  margin: 3% 0%;
+  max-width: 100%;
+}
+
+.uploadbtn {
+  background-color: #1F51FF;
+}
+
+.delbtn {
+  background-color: #FF3131;
+  float: right;
+}
+
+#postbtn {
+  background-color: #39ff14;
+}
+
+#footer {
+  margin: 3% 0 0 0;
+}

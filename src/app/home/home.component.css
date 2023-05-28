@@ -1,0 +1,118 @@
+.container {
+  width: 100;
+}
+
+.btn-dark {
+  background-color: #121313;
+}
+
+.datebtns {
+  background-color: #1F51FF;
+}
+
+.addPostBtn {
+  width: 100%;
+  background-color: #39ff14;
+}
+
+.delbtn {
+  background-color: #FF3131;
+  float: right;
+  height: 100%;
+}
+
+.commentbtn {
+  background-color: #1F51FF;
+  height: 100%;
+}
+
+.searchBtn {
+  background-color: #1F51FF;
+}
+
+#title {
+  overflow-x: auto;
+}
+
+#image {
+  display: block;
+  border: 5px solid #FF3131;
+  border-radius: 5%;
+  width: 100%;
+}
+
+.video {
+  width: 100%;
+}
+
+.videoPlayer {
+  border: 5px solid #FF3131;
+  border-radius: 5%;
+  overflow: hidden;
+  width: 100%;
+}
+
+.card.post {
+  border: 5px solid #FF3131;
+  border-radius: 5%;
+  margin-top: 1%;
+}
+
+.card.comment {
+  border: 5px solid #00FEFC;
+  border-radius: 5%;
+  margin-top: 1%;
+}
+
+.card-header {
+  width: 95%;
+  margin: auto;
+}
+
+.card-body {
+  width: 95%;
+  margin: auto;
+}
+
+.card-footer {
+  width: 95%;
+  margin: auto;
+}
+
+.card.post {
+  width: 100%;
+  background-color: black;
+}
+
+.card.comment {
+  width: 100%;
+  background-color: black;
+}
+
+#addCommentContainer  {
+  margin-top: 1%;
+}
+
+.arrow {
+  border: solid white;
+  border-width: 0 6px 6px 0;
+  padding: 5px;
+}
+
+.up {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.upvote {
+  background-color: transparent;
+}
+
+.downvote {
+  background-color: transparent;
+}

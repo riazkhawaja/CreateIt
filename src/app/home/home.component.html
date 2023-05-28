@@ -1,0 +1,214 @@
+<div class="container-sm">
+    <div class="row">
+        <div class="input-group col-sm">
+            <input type="text" class="form-control" #filter id="filter" placeholder="Filter by message or author">
+            <div class="input-group-append">
+                <button class="btn btn-outline-dark fw-bold searchBtn" type="button"
+                    (click)="filterResults(filter.value);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        class="bi bi-search" viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg> Search</button>
+            </div>
+        </div>
+        <div class="col-sm btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-outline-dark active datebtns fw-bold">
+                <input (click)="dateFilter = 'Today'; filterResults(filterSearch);" type="radio" name="options"
+                    autocomplete="off" checked> Today
+            </label>
+            <label class="btn btn-outline-dark datebtns fw-bold">
+                <input (click)="dateFilter = 'Last 7 Days'; filterResults(filterSearch);" type="radio" name="options"
+                    autocomplete="off"> Last 7 days
+            </label>
+            <label class="btn btn-outline-dark datebtns fw-bold">
+                <input (click)="dateFilter = 'All posts'; filterResults(filterSearch);" type="radio" name="options"
+                    autocomplete="off"> All posts
+            </label>
+        </div>
+    </div>
+</div>
+<div class="container-sm" *ngIf="displayPosts">
+    <div class="col-sm">
+        <button class="btn btn-outline-dark fw-bold addPostBtn mt-2" type="button" (click)="displayPosts = false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-circle"
+                viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                <path
+                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+            </svg> Post
+        </button>
+    </div>
+</div>
+<div class="container-sm">
+    <div class="row">
+        <ng-container class="col-sm">
+            <app-add-post [(displayPosts)]="displayPosts"></app-add-post>
+        </ng-container>
+    </div>
+</div>
+<div class="results">
+    <div *ngFor="let post of filteredPostList">
+        <div *ngIf="displayPosts">
+            <div class="postContainer container-sm">
+                <div class="text-white card post">
+                    <div class="card-header">
+                        <div class="container-sm">
+                            <div class="row">
+                                <div class="col">
+                                    <h1 class="card-title">{{ post.title }}</h1>
+                                </div>
+                                <div class="col-auto">
+                                    <p class="card-text date">{{ post.date | date:'medium'}}</p>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col">
+                                    <h6>By <i>{{ post.author }}</i></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container-sm">
+                            <div *ngIf="post.content; else noContent">
+                                <div class="videoPlayer col-sm" *ngIf="post.video">
+                                    <vg-player>
+                                        <video [vgMedia]="$any(media)" type="image/png" class="video" #media
+                                            preload="auto" controls>
+                                            <source [src]="post.video" type="video/mp4">
+                                        </video>
+                                    </vg-player>
+                                </div>
+                                <div class="col-sm" *ngIf="post.image">
+                                    <img id="image" [src]="post.image" alt="">
+                                </div>
+                                <div class="col-sm">
+                                    <h6 class="card-text postcontent">{{ post.content }}</h6>
+                                </div>
+                            </div>
+                            <ng-template #noContent>
+                                <div class="videoPlayer col-sm" *ngIf="post.video && !post.image">
+                                    <vg-player>
+                                        <video [vgMedia]="$any(media)" type="image/png" class="video" #media
+                                            preload="auto" controls>
+                                            <source [src]="post.video" type="video/mp4">
+                                        </video>
+                                    </vg-player>
+                                </div>
+                                <div class="col-sm" *ngIf="post.video && post.image">
+                                    <vg-player class="videoPlayer">
+                                        <video [vgMedia]="$any(media)" type="image/png" class="video" #media
+                                            preload="auto" controls>
+                                            <source [src]="post.video" type="video/mp4">
+                                        </video>
+                                    </vg-player>
+                                    <div class="">
+                                        <img id="image" [src]="post.image" alt="">
+                                    </div>
+                                </div>
+                                <div class="col-sm" *ngIf="post.image && !post.video">
+                                    <div class="">
+                                        <img id="image" [src]="post.image" alt="">
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="container-sm">
+                            <div class="row">
+                                <div class="col" style="padding: 0;">
+                                    <div class="btn-group fw-bold" role="group">
+                                        {{ post.upvotes - post.downvotes }}&nbsp;&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-sm btn-dark"
+                                            (click)="upvotePost( post )"><svg xmlns="http://www.w3.org/2000/svg"
+                                                width="24" height="24" fill="#39ff14" class="bi bi-hand-thumbs-up-fill"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z" />
+                                            </svg></button>
+                                        <button type="button" class="btn btn-sm btn-dark"
+                                            (click)="downvotePost( post )"><svg xmlns="http://www.w3.org/2000/svg"
+                                                width="24" height="24" fill="#FF3131"
+                                                class="bi bi-hand-thumbs-down-fill" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M6.956 14.534c.065.936.952 1.659 1.908 1.42l.261-.065a1.378 1.378 0 0 0 1.012-.965c.22-.816.533-2.512.062-4.51.136.02.285.037.443.051.713.065 1.669.071 2.516-.211.518-.173.994-.68 1.2-1.272a1.896 1.896 0 0 0-.234-1.734c.058-.118.103-.242.138-.362.077-.27.113-.568.113-.856 0-.29-.036-.586-.113-.857a2.094 2.094 0 0 0-.16-.403c.169-.387.107-.82-.003-1.149a3.162 3.162 0 0 0-.488-.9c.054-.153.076-.313.076-.465a1.86 1.86 0 0 0-.253-.912C13.1.757 12.437.28 11.5.28H8c-.605 0-1.07.08-1.466.217a4.823 4.823 0 0 0-.97.485l-.048.029c-.504.308-.999.61-2.068.723C2.682 1.815 2 2.434 2 3.279v4c0 .851.685 1.433 1.357 1.616.849.232 1.574.787 2.132 1.41.56.626.914 1.28 1.039 1.638.199.575.356 1.54.428 2.591z" />
+                                            </svg></button>
+                                    </div>&nbsp;
+                                    <button (click)="displayCommentForm = post.id;"
+                                        class="btn btn-sm btn-outline-dark commentbtn fw-bold">Comment</button>
+                                    <button (click)="deletePost(post, commentList)"
+                                        class="btn btn-sm btn-outline-dark delbtn fw-bold">Delete</button>
+                                </div>
+                            </div>
+                            <div id="addCommentContainer">
+                                <ng-container *ngIf="displayCommentForm != ''">
+                                    <app-add-comment [post]="post"
+                                        [(displayCommentForm)]="displayCommentForm"></app-add-comment>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <ng-container>
+                            <div class="results" *ngFor="let comment of commentList">
+                                <div *ngIf="comment.post == post.id && displayPosts">
+                                    <div class="commentContainer container-sm">
+                                        <div class="text-white card comment">
+                                            <div class="card-header">
+                                                <div class="container-sm">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <h6 class="author">By <i>{{ comment.author }}</i></h6>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <p class="card-text date">{{ comment.date | date:'medium'}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <h6 class="card-text content">{{ comment.content }}</h6>
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="container-sm">
+                                                    <div class="row">
+                                                        <div class="col" style="padding: 0;">
+                                                            <div class="btn-group fw-bold" role="group">
+                                                                {{ comment.upvotes - comment.downvotes
+                                                                }}&nbsp;&nbsp;&nbsp;
+                                                                <button type="button" class="btn btn-sm btn-dark"
+                                                                    (click)="upvoteComment( comment )"><svg
+                                                                        xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" fill="#39ff14"
+                                                                        class="bi bi-hand-thumbs-up-fill"
+                                                                        viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z" />
+                                                                    </svg></button>
+                                                                <button type="button" class="btn btn-sm btn-dark"
+                                                                    (click)="downvoteComment( comment )"><svg
+                                                                        xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" fill="#FF3131"
+                                                                        class="bi bi-hand-thumbs-down-fill"
+                                                                        viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M6.956 14.534c.065.936.952 1.659 1.908 1.42l.261-.065a1.378 1.378 0 0 0 1.012-.965c.22-.816.533-2.512.062-4.51.136.02.285.037.443.051.713.065 1.669.071 2.516-.211.518-.173.994-.68 1.2-1.272a1.896 1.896 0 0 0-.234-1.734c.058-.118.103-.242.138-.362.077-.27.113-.568.113-.856 0-.29-.036-.586-.113-.857a2.094 2.094 0 0 0-.16-.403c.169-.387.107-.82-.003-1.149a3.162 3.162 0 0 0-.488-.9c.054-.153.076-.313.076-.465a1.86 1.86 0 0 0-.253-.912C13.1.757 12.437.28 11.5.28H8c-.605 0-1.07.08-1.466.217a4.823 4.823 0 0 0-.97.485l-.048.029c-.504.308-.999.61-2.068.723C2.682 1.815 2 2.434 2 3.279v4c0 .851.685 1.433 1.357 1.616.849.232 1.574.787 2.132 1.41.56.626.914 1.28 1.039 1.638.199.575.356 1.54.428 2.591z" />
+                                                                    </svg></button>
+                                                            </div>
+                                                            <button (click)="deleteComment(comment)"
+                                                                class="btn btn-sm btn-outline-dark delbtn fw-bold">Delete</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
