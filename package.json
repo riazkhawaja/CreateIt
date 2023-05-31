@@ -1,7 +1,7 @@
 {
-  "name": "angular.io-example",
+  "name": "createitapp",
   "version": "0.0.0",
-  "description": "Example project from an angular.io guide.",
+  "description": "An app written in the Angular framework with the ability to post messages, images, and videos.",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
