@@ -1,11 +1,6 @@
-import { Component } from '@angular/core';
-import { HomeComponent } from './home/home.component';
-import { RouterModule } from '@angular/router';
-
+import { Component, NgModule } from '@angular/core';
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [HomeComponent, RouterModule],
   template: `
   <body class=''>
         <h1 id="title" class='fw-semibold text-white'>CreateIt</h1>
@@ -17,5 +12,5 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'default';
-}
+  title = 'Create It';
+} 

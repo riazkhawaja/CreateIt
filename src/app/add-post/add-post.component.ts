@@ -11,8 +11,6 @@ import { db } from '../../firebase';
 
 @Component({
   selector: 'app-add-post',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-post.component.html',
   styleUrls: ['./add-post.component.css']
 })
@@ -53,21 +51,6 @@ export class AddPostComponent {
     if (this.video) { this.videoProgress = 0; }
   }
 
-  uploadAndReturnWithMaxSize() {
-    /* this.imageCompress.uploadFile().then(({ image, orientation }: UploadResponse) => {
-      if (this.imageCompress.byteCount(image) > 1000000) {
-        this.imageCompress.compressFile(image, orientation, 60).then((result: DataUrl) => {
-          this.postForm.value.image = result;
-        })
-      } else {
-        /* const fileReader = new FileReader();
-        fileReader.readAsDataURL(event.target.files[0]); 
-        this.postForm.value.image = image;
-        return;
-      }
-    }); */
-  }
-
   async submitPost() {
 
     var postbtn = <HTMLButtonElement>document.getElementById('postbtn');
@@ -85,8 +68,6 @@ export class AddPostComponent {
 
     const storage = getStorage();
     var imageUrl = ''; var videoUrl = '';
-    console.log(image);
-    console.log(video);
 
     await new Promise<void>(async (resolve, reject) => {
       if (imageToUpload) {

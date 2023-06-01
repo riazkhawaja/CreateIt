@@ -7,8 +7,6 @@ import { Post } from '../post';
 
 @Component({
   selector: 'app-add-comment',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-comment.component.html',
   styleUrls: ['./add-comment.component.css']
 })
