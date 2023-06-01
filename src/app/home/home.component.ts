@@ -6,18 +6,10 @@ import { db } from '../../firebase';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { CommentService } from '../comment.service';
 import { Comment } from '../comment';
-import { AddCommentComponent } from '../add-comment/add-comment.component';
-import { AddPostComponent } from '../add-post/add-post.component';
 import DateDiff from 'date-diff';
-import { VgCoreModule } from '@videogular/ngx-videogular/core';
-import { VgControlsModule } from '@videogular/ngx-videogular/controls';
-import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
-import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 
 @Component({
   selector: 'app-home',
-  standalone: true,
-  imports: [CommonModule, AddCommentComponent, AddPostComponent, VgCoreModule, VgControlsModule, VgOverlayPlayModule, VgBufferingModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
