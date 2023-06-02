@@ -74,14 +74,14 @@
                             <div *ngIf="post.content; else noContent">
                                 <div class="videoPlayer col-sm" *ngIf="post.video">
                                     <vg-player>
-                                        <video [vgMedia]="$any(media)" type="image/png" class="video" #media
+                                        <video crossorigin="anonymous" [vgMedia]="$any(media)" type="image/png" class="video" #media
                                             preload="auto" controls>
                                             <source [src]="post.video" type="video/mp4">
                                         </video>
                                     </vg-player>
                                 </div>
                                 <div class="col-sm" *ngIf="post.image">
-                                    <img id="image" [src]="post.image" alt="">
+                                    <img crossorigin="anonymous" id="image" [src]="post.image" alt="">
                                 </div>
                                 <div class="col-sm">
                                     <h6 class="card-text postcontent">{{ post.content }}</h6>
@@ -90,7 +90,7 @@
                             <ng-template #noContent>
                                 <div class="videoPlayer col-sm" *ngIf="post.video && !post.image">
                                     <vg-player>
-                                        <video [vgMedia]="$any(media)" type="image/png" class="video" #media
+                                        <video crossorigin="anonymous" [vgMedia]="$any(media)" type="image/png" class="video" #media
                                             preload="auto" controls>
                                             <source [src]="post.video" type="video/mp4">
                                         </video>
@@ -98,18 +98,18 @@
                                 </div>
                                 <div class="col-sm" *ngIf="post.video && post.image">
                                     <vg-player class="videoPlayer">
-                                        <video [vgMedia]="$any(media)" type="image/png" class="video" #media
+                                        <video crossorigin="anonymous" [vgMedia]="$any(media)" type="image/png" class="video" #media
                                             preload="auto" controls>
                                             <source [src]="post.video" type="video/mp4">
                                         </video>
                                     </vg-player>
                                     <div class="">
-                                        <img id="image" [src]="post.image" alt="">
+                                        <img crossorigin="anonymous" id="image" [src]="post.image" alt="">
                                     </div>
                                 </div>
                                 <div class="col-sm" *ngIf="post.image && !post.video">
                                     <div class="">
-                                        <img id="image" [src]="post.image" alt="">
+                                        <img crossorigin="anonymous" id="image" [src]="post.image" alt="">
                                     </div>
                                 </div>
                             </ng-template>

@@ -42,7 +42,7 @@
                 <div id="footer">
                     <button [disabled]="!this.postForm.valid" type="submit" id="postbtn"
                         class="btn btn-outline-dark fw-bold">Post</button>
-                    <button (click)="displayPostsChange.emit(true)"
+                    <button [disabled]="this.videoProgress != 100 || this.imageProgress != 100" (click)="this.postForm.reset(); this.video = null; this.image = null; this.imageProgress = 100; this.videoProgress = 100; displayPostsChange.emit(true)"
                         class="btn btn-outline-dark delbtn fw-bold">Cancel</button>
                 </div>
             </form>
