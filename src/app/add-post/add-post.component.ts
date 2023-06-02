@@ -8,6 +8,7 @@ import imageCompression from 'browser-image-compression';
 import { UploadTask, getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { addDoc, collection, setDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
+import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
 
 @Component({
   selector: 'app-add-post',
@@ -25,7 +26,7 @@ export class AddPostComponent {
   image: File | null = null;
   video: File | null = null;
 
-  constructor(private imageCompress: NgxImageCompressService) {
+  constructor() {
     this.displayPosts = false;
     this.imageProgress = 100;
     this.videoProgress = 100;
@@ -35,20 +36,34 @@ export class AddPostComponent {
     author: new FormControl('', Validators.required),
     title: new FormControl('', Validators.required),
     content: new FormControl(''),
-    /* image: new FormControl(null),
-    video: new FormControl(null) */
   });
 
   imageUpload(event: any) {
     var files = event.target.files;
     this.image = files ? files[0] : null;
-    if (this.image) { this.imageProgress = 0; }
+    //if (this.image) { this.imageProgress = 0; }
   }
 
   videoUpload(event: any) {
     var files = event.target.files;
     this.video = files ? files[0] : null;
-    if (this.video) { this.videoProgress = 0; }
+    //if (this.video) { this.videoProgress = 0; }
+  }
+
+  processVideo(): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      const ffmpeg = createFFmpeg({ progress: (e) => this.videoProgress = 100 * e.ratio });
+      await ffmpeg.load();
+      ffmpeg.FS("writeFile", this.video!.name, await fetchFile(this.video!));
+      await ffmpeg.run('-i', this.video!.name, '-c:v', 'h264', '-crf', '30', '-b:v', '0', '-row-mt', '1', '-f', 'mp4', "output.mp4");
+      const data = ffmpeg.FS("readFile", "output.mp4");
+      const file = new File([data.buffer], "output.mp4");
+      /* const url = URL.createObjectURL(
+        new Blob([data.buffer], { type: "video/mp4" })
+      ); */
+      this.video = file;
+      resolve();
+    });
   }
 
   async submitPost() {
@@ -71,6 +86,7 @@ export class AddPostComponent {
 
     await new Promise<void>(async (resolve, reject) => {
       if (imageToUpload) {
+        this.imageProgress = 0;
         await new Promise<void>(async (resolve, reject) => {
           const imageRef = ref(storage, `images/${submitDoc.id}`);
           var uploadTask = uploadBytesResumable(imageRef, image!);
@@ -88,7 +104,10 @@ export class AddPostComponent {
         });
       }
       if (videoToUpload) {
+        this.videoProgress = 0;
+        await this.processVideo();
         await new Promise<void>((resolve, reject) => {
+          video = this.video;
           const videoRef = ref(storage, `videos/${submitDoc.id}`);
           var uploadTask = uploadBytesResumable(videoRef, video!);
           uploadTask.on('state_changed', (snapshot) => {
